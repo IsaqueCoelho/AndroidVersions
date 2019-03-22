@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">AndroidVersions</string>
+
+    <string-array name="names">
+        <item>Cupcake</item>
+        <item>Eclair</item>
+        <item>Honeycomb</item>
+        <item>KitKat</item>
+        <item>Lollipop</item>
+        <item>Marshmallow</item>
+        <item>Nougat</item>
+        <item>Oreo</item>
+        <item>Pie</item>
+    </string-array>
+
+    <string-array name="versions">
+        <item>v1.5</item>
+        <item>v2.0</item>
+        <item>v3.0</item>
+        <item>v4.4</item>
+        <item>v5.0</item>
+        <item>v6.0</item>
+        <item>v7.0</item>
+        <item>v8.0</item>
+        <item>v9.0</item>
+    </string-array>
+
+</resources>
