@@ -10,6 +10,9 @@ This is a simple app that list android versions that implement a some android te
 * AdapterView
 * A MVVM simple concept
 * Data Binding
+* LiveData
+* Room
 
 ### Reference
 * The MVVM concepts used in this project was possible following this tutorial -> https://www.youtube.com/watch?v=ijXjCtCXcN4
+* The Room implementation in this project was possible following this tutorial -> https://www.youtube.com/playlist?list=PLrnPJCHvNZuDihTpkRs6SpZhqgBqPU118
