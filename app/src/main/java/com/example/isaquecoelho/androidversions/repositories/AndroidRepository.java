@@ -1,52 +1,74 @@
 package com.example.isaquecoelho.androidversions.repositories;
 
-import android.arch.lifecycle.MutableLiveData;
+import android.app.Application;
+import android.os.AsyncTask;
+
+import androidx.lifecycle.LiveData;
 
 import com.example.isaquecoelho.androidversions.R;
 import com.example.isaquecoelho.androidversions.modal.Android;
-import com.example.isaquecoelho.androidversions.util.CustomApplication;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AndroidRepository {
 
-    private static AndroidRepository instance;
-    private List<Android> androidList = new ArrayList<>();
+    private AndroidDao mAndroidDao;
+    private LiveData<List<Android>> AndroidList;
 
-    public static AndroidRepository getInstance(){
-        if(instance == null){
-            instance = new AndroidRepository();
+    public AndroidRepository(Application application) {
+        AndroidDatabase database = AndroidDatabase.getInstance(application);
+        mAndroidDao = database.androidDao();
+        AndroidList = mAndroidDao.getAllAndroid();
+    }
+
+    public void insertTest(){
+        new InsertAndroidListTestAsyncTask(mAndroidDao).execute();
+    }
+
+    public void deleteAll(){
+        new DeleteAndroidListAsyncTask(mAndroidDao).execute();
+    }
+
+    public LiveData<List<Android>> getAndroidList() {
+        return AndroidList;
+    }
+
+    private static class InsertAndroidListTestAsyncTask extends AsyncTask<Void, Void, Void>{
+        private AndroidDao androidDao;
+
+        InsertAndroidListTestAsyncTask(AndroidDao androidDao) {
+            this.androidDao = androidDao;
         }
-        return instance;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            androidDao.insert(new Android("Cupcake", "V1.5", R.drawable.ic_1));
+            androidDao.insert(new Android("Eclair", "V2.0", R.drawable.ic_2));
+            androidDao.insert(new Android("Honeycomb", "V3.0", R.drawable.ic_3));
+            androidDao.insert(new Android("KitKat", "V4.4", R.drawable.ic_4));
+            androidDao.insert(new Android("Lollipop", "V5.0", R.drawable.ic_5));
+            androidDao.insert(new Android("Marshmallow", "V6.0", R.drawable.ic_6));
+            androidDao.insert(new Android("Nougat", "V7.0", R.drawable.ic_7));
+            androidDao.insert(new Android("Oreo", "V8.0", R.drawable.ic_8));
+            androidDao.insert(new Android("Pie", "V9.0", R.drawable.ic_9));
+
+            return null;
+        }
     }
 
-    //Pretend to get data from webservice or firebase
-    public MutableLiveData<List<Android>> getAndroidList(){
-        setAndroidList();
-        MutableLiveData<List<Android>> androidDataList = new MutableLiveData<>();
-        androidDataList.setValue(androidList);
-        return androidDataList;
-    }
+    private static class DeleteAndroidListAsyncTask extends AsyncTask<Void, Void, Void>{
 
-    private void setAndroidList(){
-        List<String> androidNameList =
-                Arrays.asList(CustomApplication.getContext().getResources().getStringArray(R.array.names));
-        List<String> androidVersionList =
-                Arrays.asList(CustomApplication.getContext().getResources().getStringArray(R.array.versions));
-        int[] imageId = {R.drawable.ic_1,
-                R.drawable.ic_2,
-                R.drawable.ic_3,
-                R.drawable.ic_4,
-                R.drawable.ic_5,
-                R.drawable.ic_6,
-                R.drawable.ic_7,
-                R.drawable.ic_8,
-                R.drawable.ic_9};
+        private AndroidDao androidDao;
 
-        for (int indexItem = 0; indexItem < androidNameList.size(); indexItem++) {
-            androidList.add(new Android(androidNameList.get(indexItem), androidVersionList.get(indexItem), imageId[indexItem]));
+        DeleteAndroidListAsyncTask(AndroidDao androidDao) {
+            this.androidDao = androidDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            androidDao.deleteAll();
+            return null;
         }
     }
 }

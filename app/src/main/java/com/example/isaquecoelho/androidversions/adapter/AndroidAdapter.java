@@ -1,14 +1,15 @@
 package com.example.isaquecoelho.androidversions.adapter;
 
-import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.example.isaquecoelho.androidversions.modal.Android;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.isaquecoelho.androidversions.R;
 import com.example.isaquecoelho.androidversions.databinding.ItemAndroidBinding;
+import com.example.isaquecoelho.androidversions.modal.Android;
 
 import java.util.List;
 
@@ -37,7 +38,12 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.AndroidV
 
     @Override
     public int getItemCount() {
-        return mAndroidList.size();
+        return (mAndroidList == null) ? 0 : mAndroidList.size();
+    }
+
+    public void setAndroidList(List<Android> androidList){
+        this.mAndroidList = androidList;
+        notifyDataSetChanged();
     }
 
     static class AndroidViewHolder extends RecyclerView.ViewHolder{

@@ -1,30 +1,31 @@
 package com.example.isaquecoelho.androidversions.viewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import com.example.isaquecoelho.androidversions.modal.Android;
 import com.example.isaquecoelho.androidversions.repositories.AndroidRepository;
 
 import java.util.List;
 
-public class MainActivityViewModal extends ViewModel {
+public class MainActivityViewModal extends AndroidViewModel{
 
-    private MutableLiveData<List<Android>> mAndroidList;
-    private AndroidRepository mAndroidRepository;
+    private LiveData<List<Android>> androidList;
 
-    public void init(){
+    public MainActivityViewModal(@NonNull Application application) {
+        super(application);
+        AndroidRepository repository2 = new AndroidRepository(application);
 
-        if (mAndroidList != null){
-            return;
-        }
+        repository2.deleteAll();
+        repository2.insertTest();
 
-        mAndroidRepository = AndroidRepository.getInstance();
-        mAndroidList = mAndroidRepository.getAndroidList();
+        androidList = repository2.getAndroidList();
     }
 
     public LiveData<List<Android>> getAndroidList(){
-        return mAndroidList;
+        return androidList;
     }
 }
